@@ -72,11 +72,14 @@ while True:
         # Draw the emoji on a black background frame
         emoji_frame = draw_emoji(emotion)
 
-        # Display the larger emoji frame in a separate window
-        cv2.imshow('Emoji Representation', emoji_frame)
+        # Resize emoji to fit next to the video feed
+        resized_emoji = cv2.resize(emoji_frame, (150, 150))
 
-    # Display the resulting frame
-    cv2.imshow('Real-time Emotion Detection', frame)
+        # Place the emoji on the frame by adding it in a corner (e.g., top-right)
+        frame[0:150, frame.shape[1]-150:frame.shape[1]] = resized_emoji
+
+    # Display the resulting frame with the emoji
+    cv2.imshow('Emotion Detection with Emoji', frame)
 
     # Press 'q' to exit
     if cv2.waitKey(1) & 0xFF == ord('q'):
